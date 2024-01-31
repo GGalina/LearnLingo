@@ -1,7 +1,10 @@
+import { LogoContainer, LogoImg, LogoTitle } from './Logo.styled';
+
 export const Logo = () => {
   return (
-    <div>
-      <h1>Hello</h1>
-    </div>
+    <LogoContainer>
+      <LogoImg/>
+      <LogoTitle>LearnLingo</LogoTitle>
+    </LogoContainer>
   );
 };
