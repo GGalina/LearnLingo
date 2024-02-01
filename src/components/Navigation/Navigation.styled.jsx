@@ -37,15 +37,15 @@ export const NavigationLink = styled(NavLink)`
   @media (max-width: 767px) {
     &.active {
       width: 100%;
-      background-color: ${({ selcolor }) => selcolor || '#FFFFFF'};
-      border: 1px solid ${({ selcolor }) => selcolor || '#FFFFFF'};
+      background-color: ${({ $selcolor }) => $selcolor || '#F4C550'};
+      border: 1px solid ${({ $selcolor }) => $selcolor || '#F4C550'};
       border-radius: 12px;
     }
   }
 
   @media (min-width: 768px) {
     &.active {
-      color: ${({ selcolor }) => selcolor || '#121417'};
+      color: ${({ $selcolor }) => $selcolor || '#121417'};
     }
   }
 `;

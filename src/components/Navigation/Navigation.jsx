@@ -12,19 +12,19 @@ export const Navigation = () => {
     <>
       {isTablet && (
         <NavContainer>
-          <NavigationLink to='/' selcolor={selectedColor}>Home</NavigationLink>
+          <NavigationLink to='/' $selcolor={selectedColor}>Home</NavigationLink>
           <NavigationLink to='/teachers' selcolor={selectedColor}>Teachers</NavigationLink>
         </NavContainer>
       )}
 
       {!isTablet && (
         <NavContainer>          
-          <NavigationLink to='/' selcolor={selectedColor}>
+          <NavigationLink to='/' $selcolor={selectedColor}>
             <IoHomeOutline stroke='#121417' />
               Home
           </NavigationLink>
 
-          <NavigationLink to='/teachers' selcolor={selectedColor}>
+          <NavigationLink to='/teachers' $selcolor={selectedColor}>
             <RiGraduationCapLine fill='#121417' />
               Teachers
           </NavigationLink>
