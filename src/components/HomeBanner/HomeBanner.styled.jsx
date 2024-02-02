@@ -17,18 +17,13 @@ export const Container = styled.div`
     }
 
     @media (min-width: 768px) {
-        width: 720px;
-    }
- 
-    /* @media (min-width: 768px) {
-        width: 768px;
-        padding: 20px 42px;
+        width: 767px;
     }
 
     @media (min-width: 1280px) {
-        width: 1280px;
-        padding: 20px 128px;
-    } */
+        width: 720px;
+        height: 530px;
+    } 
 `;
 
 export const Title = styled.h1`
