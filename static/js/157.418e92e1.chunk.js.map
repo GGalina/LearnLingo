@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/157.418e92e1.chunk.js","mappings":"wJACO,MAAMA,EAAeA,KAEpBC,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,G","sources":["pages/TeachersPage.jsx"],"sourcesContent":["\nexport const TeachersPage = () => {\n    return (\n        <>\n\n        </>\n    );\n};"],"names":["TeachersPage","_jsx","_Fragment"],"sourceRoot":""}

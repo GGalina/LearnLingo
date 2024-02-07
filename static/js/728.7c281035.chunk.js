@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunklearn_lingo=self.webpackChunklearn_lingo||[]).push([[728],{728:(e,l,n)=>{n.r(l),n.d(l,{RegistrationModal:()=>s});var r=n(184);const s=()=>(0,r.jsx)(r.Fragment,{children:(0,r.jsx)("div",{children:" Hello its register"})})}}]);
+//# sourceMappingURL=728.7c281035.chunk.js.map
