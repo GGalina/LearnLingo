@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useMediaQuery } from 'react-responsive';
@@ -14,33 +13,27 @@ import {
 } from './Header.styled';
 
 export const Header = () => {
-  const isTablet = useMediaQuery({ query: '(min-width: 768px)' });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
- 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const isTablet = useMediaQuery({ query: '(min-width: 768px)' });
+
+  const openSideMenu = () => {
+    setIsMenuOpen(true);
   };
 
-  const closeMenu = () => {
+  const closeSideMenu = useCallback(() => {
     setIsMenuOpen(false);
-  };
+  }, []); 
 
-  const handleMenuClick = (event) => {
-    const isLinkOrButton =
-      event.target.tagName.toLowerCase() === 'a' ||
-      event.target.tagName.toLowerCase() === 'button';
-
-    if (isLinkOrButton) {
-      return;
+  const handleMenuClick = (e) => {
+    if (e.currentTarget === e.target) {
+      closeSideMenu();
     }
-
-    event.stopPropagation();
   };
 
   useEffect(() => {
-    const handleEscKey = (event) => {
-      if (event.keyCode === 27) {
-        closeMenu();
+    const handleEscKey = (e) => {
+      if (e.keyCode === 27) {
+        closeSideMenu();
       }
     };
 
@@ -48,7 +41,7 @@ export const Header = () => {
     return () => {
       window.removeEventListener('keydown', handleEscKey);
     };
-  }, []);
+  }, [closeSideMenu]);
 
   return (
     <Container>
@@ -56,7 +49,7 @@ export const Header = () => {
         <Logo />
         {isTablet && (
           <HeaderWrapper>
-            <Navigation />
+            <Navigation  />
             <Auth />
           </HeaderWrapper>
         )}
@@ -64,20 +57,20 @@ export const Header = () => {
         {!isTablet &&
           <>
             {!isMenuOpen &&
-              <GiHamburgerMenu onClick={toggleMenu} />
+              <GiHamburgerMenu onClick={openSideMenu} />
             }
           </>
         }
 
         {!isTablet && isMenuOpen && (
-          <BackdropOverlay onClick={closeMenu}>
-            <SlideMenu onClick={handleMenuClick}>
-              <CloseIcon>
-                <IoMdClose onClick={toggleMenu} />
+          <BackdropOverlay className="backdrop" onClick={handleMenuClick}>
+            <SlideMenu >
+              <CloseIcon className="close-icon">
+                <IoMdClose onClick={closeSideMenu} />
               </CloseIcon>
               <MenuWrapper>
-                <Navigation />
-                <Auth />
+                <Navigation onClickClose={closeSideMenu}/>
+                <Auth onClickClose={closeSideMenu}/>
               </MenuWrapper>
             </SlideMenu>
           </BackdropOverlay>

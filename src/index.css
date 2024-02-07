@@ -56,6 +56,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -69,13 +73,13 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-background-color: grey;
-border-radius: 100vw;
+  background-color: grey;
+  border-radius: 100vw;
 }
 
 ::-webkit-scrollbar-track {
-background-color: #FFFFFF;
-border-radius: 100vw;
+  background-color: #FFFFFF;
+  border-radius: 100vw;
 }
 
 html {
@@ -117,4 +121,8 @@ a {
 button {
   font-family: 'Roboto-Regular', sans-serif;
   padding: 0;
+}
+
+input {
+  outline: none;
 }

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Bars } from 'react-loading-icons';
 
 export const LoaderContainer = styled.div`
     display: flex;
@@ -8,10 +7,7 @@ export const LoaderContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Loading = styled(Bars)`
-    height: 3em;
-`;
-
 export const LoadingText = styled.h2`
     color: #121417;
+    padding-top: 20px;
 `;

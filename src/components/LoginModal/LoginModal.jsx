@@ -1,0 +1,146 @@
+import { useState, useEffect } from 'react';
+import { IoMdClose } from "react-icons/io";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useColor } from '../../context/ColorContext';
+import { useModal } from '../../context/ModalContext';
+import { Backdrop } from "../Backdrop/Backdrop";
+import {
+    LoginContainer, CloseIcon,
+    Header, Desc, Form,
+    Email, Password, LoginBtn,
+    PasswordContainer, FormWrapper,
+    EmailErrorMsg, PasswordErrorMsg,
+    EmailWrapper
+} from './LoginModal.styled';
+
+export const LoginModal = () => {
+    const { closeModal } = useModal();
+    const { selectedColor } = useColor();
+
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isPasswordValid = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(password);
+
+    const handleInputChange = (field, value) => {
+        if (field === 'email') {
+            setEmail(value);
+        } else if (field === 'password') {
+            setPassword(value);
+        }
+    };
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const validateFields = () => {
+        setEmailError(isEmailValid ? '' : 'Invalid email address');
+        setPasswordError(isPasswordValid ? '' : 'Password must be at least 8 characters with a number and a letter');
+    };
+
+    const handleClose = () => {
+        document.body.classList.remove('no-scroll');
+        closeModal();
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        validateFields();
+
+        if (isEmailValid && isPasswordValid) {
+            console.log('Email: ', email)
+            console.log('Password: ', password)
+            closeModal();
+        }
+    };
+
+    useEffect(() => {
+        const handleEscKey = (event) => {
+            if (event.keyCode === 27) {
+                closeModal();
+            }
+        };
+
+        window.addEventListener('keydown', handleEscKey);
+        return () => {
+            window.removeEventListener('keydown', handleEscKey);
+        };
+    }, [closeModal]);
+
+    return (
+        <Backdrop onClick={handleClose}>
+            <LoginContainer onClick={(e) => e.stopPropagation()} >
+                <CloseIcon >
+                    <IoMdClose style={{ width: '32px', height: '32px' }}
+                        onClick={handleClose}
+                    />
+                </CloseIcon>
+                <Header>Log In</Header>
+                <Desc>
+                    Welcome back! Please enter your credentials to access
+                    your account and continue your search for an teacher.
+                </Desc>
+                <Form onSubmit={handleLogin}>
+                    <FormWrapper>
+                        <EmailWrapper>
+                            <Email
+                                type="text"
+                                placeholder="Email"
+                                autoComplete='off'
+                                value={email}
+                                onBlur={validateFields}
+                                onChange={(e) => handleInputChange('email', e.target.value)}
+                                $haserror={Boolean(emailError)}
+                                $selcolor={selectedColor}
+                            />
+                            {emailError && <EmailErrorMsg>{emailError}</EmailErrorMsg>}
+                        </EmailWrapper>
+
+                        <PasswordContainer>
+                            <Password
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Password"
+                                autoComplete='off'
+                                value={password}
+                                onBlur={validateFields}
+                                onChange={(e) => handleInputChange('password', e.target.value)}
+                                $haserror={Boolean(passwordError)}
+                                $selcolor={selectedColor}
+                            />
+                            <FaRegEye
+                                onClick={handleTogglePasswordVisibility}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    cursor: 'pointer',
+                                    display: showPassword ? 'block' : 'none',
+                                }}
+                            />
+                            <FaRegEyeSlash
+                                onClick={handleTogglePasswordVisibility}
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    cursor: 'pointer',
+                                    display: !showPassword ? 'block' : 'none',
+                                }}
+                            />
+                            {passwordError && <PasswordErrorMsg>{passwordError}</PasswordErrorMsg>}
+                        </PasswordContainer>
+                    </FormWrapper>
+                    <LoginBtn type="submit" $selcolor={selectedColor}>Log In</LoginBtn>
+                </Form>
+            </LoginContainer>
+        </Backdrop>
+    );
+};

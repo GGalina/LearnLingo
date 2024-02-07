@@ -13,7 +13,6 @@ export const LogoImg = styled.span`
     border-radius: 50%;
     background: linear-gradient(to bottom, #338AF3 50%, #FFDA44 50%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    
 `;
 
 export const LogoTitle = styled.p`
