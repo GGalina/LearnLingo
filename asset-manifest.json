@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/LearnLingo/static/css/main.596799a9.css",
-    "main.js": "/LearnLingo/static/js/main.8913484f.js",
+    "main.js": "/LearnLingo/static/js/main.39f5f732.js",
     "static/js/937.d6197fce.chunk.js": "/LearnLingo/static/js/937.d6197fce.chunk.js",
     "static/js/157.418e92e1.chunk.js": "/LearnLingo/static/js/157.418e92e1.chunk.js",
-    "static/js/585.d1e61346.chunk.js": "/LearnLingo/static/js/585.d1e61346.chunk.js",
-    "static/js/728.7c281035.chunk.js": "/LearnLingo/static/js/728.7c281035.chunk.js",
+    "static/js/194.fc7c9789.chunk.js": "/LearnLingo/static/js/194.fc7c9789.chunk.js",
+    "static/js/416.f96bbd06.chunk.js": "/LearnLingo/static/js/416.f96bbd06.chunk.js",
     "static/js/202.8755dc0c.chunk.js": "/LearnLingo/static/js/202.8755dc0c.chunk.js",
     "static/media/Roboto-Italic.ttf": "/LearnLingo/static/media/Roboto-Italic.87f3afe16a8c3c370634.ttf",
     "static/media/Roboto-Medium.ttf": "/LearnLingo/static/media/Roboto-Medium.7c8d04cd831df3033c8a.ttf",
@@ -16,15 +16,15 @@
     "static/media/Mac.png": "/LearnLingo/static/media/Mac.6208560764289eceb134.png",
     "index.html": "/LearnLingo/index.html",
     "main.596799a9.css.map": "/LearnLingo/static/css/main.596799a9.css.map",
-    "main.8913484f.js.map": "/LearnLingo/static/js/main.8913484f.js.map",
+    "main.39f5f732.js.map": "/LearnLingo/static/js/main.39f5f732.js.map",
     "937.d6197fce.chunk.js.map": "/LearnLingo/static/js/937.d6197fce.chunk.js.map",
     "157.418e92e1.chunk.js.map": "/LearnLingo/static/js/157.418e92e1.chunk.js.map",
-    "585.d1e61346.chunk.js.map": "/LearnLingo/static/js/585.d1e61346.chunk.js.map",
-    "728.7c281035.chunk.js.map": "/LearnLingo/static/js/728.7c281035.chunk.js.map",
+    "194.fc7c9789.chunk.js.map": "/LearnLingo/static/js/194.fc7c9789.chunk.js.map",
+    "416.f96bbd06.chunk.js.map": "/LearnLingo/static/js/416.f96bbd06.chunk.js.map",
     "202.8755dc0c.chunk.js.map": "/LearnLingo/static/js/202.8755dc0c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.596799a9.css",
-    "static/js/main.8913484f.js"
+    "static/js/main.39f5f732.js"
   ]
 }
