@@ -6,11 +6,19 @@ export const AuthContainer = styled.div`
     align-items: center;
     width: inherit;
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         width: 100%;
         flex-direction: column;
         align-items: flex-start;
         gap: 22px;
+    }
+
+    @media (min-width: 768px) {
+        gap: 5px;
+    }
+
+    @media (min-width: 1280px) {
+        gap: 16px;
     }
 `;
 

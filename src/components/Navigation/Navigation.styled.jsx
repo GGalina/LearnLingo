@@ -14,6 +14,13 @@ export const NavContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+  }
+
+  @media (min-width: 1280px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     gap: 28px;
   }
 `;
@@ -32,6 +39,14 @@ export const NavigationLink = styled(NavLink)`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (min-width: 768px) {
+    padding: 14px 7px;
+  }
+
+  @media (min-width: 1280px){
+    padding: 14px;
   }
 
   @media (max-width: 767px) {
