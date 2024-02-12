@@ -2,10 +2,13 @@ import * as Yup from 'yup';
 import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { IoMdClose } from 'react-icons/io';
-import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { useColor } from '../../context/ColorContext';
 import { useModal } from '../../context/ModalContext';
 import { Backdrop } from '../Backdrop/Backdrop';
+import { LoginAPI } from '../../services/firebaseAPI';
+import { useAuth } from '../../context/AuthContext';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+
 import {
   LoginContainer, CloseIcon,
   Header, Desc, Form,
@@ -25,6 +28,7 @@ const LoginSchema = Yup.object().shape({
 export const LoginModal = () => {
     const { closeModal } = useModal();
     const { selectedColor } = useColor();
+    const { setRegistrationStatus } = useAuth();
 
     const formik = useFormik({
         initialValues: {
@@ -32,12 +36,25 @@ export const LoginModal = () => {
             password: '',
         },
         validationSchema: LoginSchema,
-        onSubmit: (values) => {
-            console.log('Email:', values.email);
-            console.log('Password:', values.password);
-            closeModal();
-        },
+        onSubmit: async () => {
+            await handleLogin(formik.values.email, formik.values.password);
+    },
     });
+
+    const handleLogin = async (email, password) => {
+        try {
+            const userName = await LoginAPI(email, password);
+
+            setRegistrationStatus(true, userName);
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('registeredUserName', userName);
+
+            closeModal();
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
 
     const handleTogglePasswordVisibility = () => {
         formik.setFieldValue('showPassword', !formik.values.showPassword);
