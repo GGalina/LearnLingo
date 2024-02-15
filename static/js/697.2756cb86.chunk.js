@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunklearn_lingo=self.webpackChunklearn_lingo||[]).push([[697],{697:(e,a,n)=>{n.r(a),n.d(a,{FavoritesPage:()=>r});var s=n(184);const r=()=>(0,s.jsx)(s.Fragment,{})}}]);
+//# sourceMappingURL=697.2756cb86.chunk.js.map
