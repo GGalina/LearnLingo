@@ -13,30 +13,28 @@ const RegistrationModal = lazy(() => import('../RegistrationModal/RegistrationMo
 
 export const Layout = ({ children }) => (
   <AuthProvider>
-
-      <ColorProvider>
+    <ColorProvider>
       <ModalProvider>
-          <Header />
-          <Suspense fallback={<Loader />}>
-            {children}
-            <Outlet />
-          <ModalRenderer />
-
-          </Suspense>
-        </ModalProvider>
-      </ColorProvider>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-       />
+        <Header />
+        <Suspense fallback={<Loader />}>
+          {children}
+          <Outlet />
+        <ModalRenderer />
+        </Suspense>
+      </ModalProvider>
+    </ColorProvider>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      />
   </AuthProvider>
 );
 

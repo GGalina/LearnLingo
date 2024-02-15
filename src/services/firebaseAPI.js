@@ -1,10 +1,23 @@
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { firebaseConfig } from './firebaseConfig';
+import 'firebase/compat/database';
 import { toast } from 'react-toastify';
+import firebase from "firebase/compat/app";
+import { firebaseConfig } from './firebaseConfig';
+import {
+  getDatabase, ref, get,
+  query, orderByChild,
+  startAfter, limitToFirst
+} from 'firebase/database';
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+
+// Initialize Realtime Database and get a reference to the service
+const db = getDatabase(app);
+
 export const auth = firebase.auth();
+
+// --------------------------------Authentification---------------------------------
 
 export const RegisterAPI = async (name, email, password) => {
   try {
@@ -47,3 +60,41 @@ export const LogOutAPI = async () => {
     throw new Error(error);
   }
 };
+
+//----------------------------------------------Teachers-------------------------------------------
+
+export const fetchTeachers = async (lastFetched, batchSize = 4) => {
+  try {
+    const teachersRef = ref(db, 'teachers');
+    let teachersQuery;
+
+    if (lastFetched) {
+      teachersQuery = query(
+        teachersRef,
+        orderByChild('id'),
+        startAfter(lastFetched),
+        limitToFirst(batchSize)
+      );
+    } else {
+      teachersQuery = query(
+        teachersRef,
+        orderByChild('id'),
+        limitToFirst(batchSize)
+      );
+    }
+
+    const snapshot = await get(teachersQuery);
+    const response = [];
+
+    snapshot.forEach((childSnapshot) => {
+      const data = childSnapshot.val();
+      response.push({ id: childSnapshot.key, ...data });
+    });
+
+    return response;
+  } catch (error) {
+    toast.error('Error fetching teachers:');
+    throw new Error('Error fetching teachers:', error);
+  }
+};
+
