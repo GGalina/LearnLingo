@@ -10,6 +10,8 @@ import { AuthProvider } from '../../context/AuthContext';
 
 const LoginModal = lazy(() => import('../LoginModal/LoginModal').then(module => ({ default: module.LoginModal })));
 const RegistrationModal = lazy(() => import('../RegistrationModal/RegistrationModal').then(module => ({ default: module.RegistrationModal })));
+const BookingModal = lazy(() => import('../BookingModal/BookingModal').then(module => ({ default: module.BookingModal })));
+const NonAuthModal = lazy(() => import('../NonAuthModal/NonAuthModal').then(module => ({ default: module.NonAuthModal })));
 
 export const Layout = ({ children }) => (
   <AuthProvider>
@@ -45,6 +47,8 @@ const ModalRenderer = () => {
     <>
       {modalType === 'login' && <LoginModal />}
       {modalType === 'register' && <RegistrationModal />}
+      {modalType === 'booking' && <BookingModal />}
+      {modalType === 'noauth' && <NonAuthModal/>}
     </>
   );
 };

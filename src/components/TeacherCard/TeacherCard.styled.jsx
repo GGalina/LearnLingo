@@ -53,17 +53,26 @@ export const TopInfoContainer = styled.div`
     display: flex;
     gap: 20px;
     align-items: center;
-    position: absolute;
-    top: 18px;
-    right: 18px;
+
+    @media (min-width: 480px) {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+    }
 
     @media (min-width: 768px) {
+        position: absolute;
+        top: 18px;
+        right: 18px;
         gap: 24px;
         top: 24px;
         right: 24px;
     }
 
     @media (min-width: 1280px) {
+        position: absolute;
+        top: 18px;
+        right: 18px;
         gap: 64px;
         top: 24px;
         right: 24px;

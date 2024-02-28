@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../Loader/Loader';
 import { useMediaQuery } from 'react-responsive';
 import { useColor } from '../../context/ColorContext';
-import { fetchTeachers } from '../../services/firebaseAPI';
+import { fetchTeachersAPI } from '../../services/firebaseAPI';
+import { Filter } from '../Filter/Filter';
 import { TeachersList } from '../TeachersList/TeachersList';
 import {
     TeachersContainer,
@@ -26,7 +27,7 @@ export const Teachers = () => {
                 return;
             }
 
-            const newTeachers = await fetchTeachers(lastFetched);
+            const newTeachers = await fetchTeachersAPI(lastFetched);
 
             if (newTeachers.length > 0) {
                 setTeachers((prevTeachers) => [...prevTeachers, ...newTeachers]);
@@ -46,7 +47,7 @@ export const Teachers = () => {
         const fetchInitialTeachers = async () => {
             try {
                 setIsLoading(true);
-                const initialTeachers = await fetchTeachers(null);
+                const initialTeachers = await fetchTeachersAPI(null);
                 setTeachers(initialTeachers);
                 
                 if (initialTeachers.length > 0) {
@@ -66,8 +67,9 @@ export const Teachers = () => {
 
     return (
         <TeachersContainer>
+            <Filter/>
             <TeachersList teachers={teachers} isDesktop={isDesktop} />
-                {hasMore && (
+                {!isLoading && hasMore && (
                     <LoadMore $selcolor={selectedColor} type="button" onClick={loadMoreTeachers}>
                         Load more
                     </LoadMore>

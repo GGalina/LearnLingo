@@ -1,3 +1,4 @@
+import axios from 'axios';
 import "firebase/compat/auth";
 import 'firebase/compat/database';
 import { toast } from 'react-toastify';
@@ -16,6 +17,8 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 export const auth = firebase.auth();
+
+axios.defaults.baseURL = 'https://learnlingo-email-sender-backend.onrender.com';
 
 // --------------------------------Authentification---------------------------------
 
@@ -63,7 +66,7 @@ export const LogOutAPI = async () => {
 
 //----------------------------------------------Teachers-------------------------------------------
 
-export const fetchTeachers = async (lastFetched, batchSize = 4) => {
+export const fetchTeachersAPI = async (lastFetched, batchSize = 4) => {
   try {
     const teachersRef = ref(db, 'teachers');
     let teachersQuery;
@@ -98,3 +101,15 @@ export const fetchTeachers = async (lastFetched, batchSize = 4) => {
   }
 };
 
+
+
+//----------------------------------------------Booking free trail-------------------------------------------
+export const sendEmailApi = async formData => {
+  try {
+    const { data } = await axios.post('/sendEmail', formData);
+    return data.message;
+  } catch (error) {
+    toast.error('Error sending a Booking request');
+    throw new Error('Error sending a Booking request:', error);
+  }
+};

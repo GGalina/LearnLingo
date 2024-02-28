@@ -2,6 +2,7 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useColor } from '../../context/ColorContext';
 import Student from '../../assets/images/Student.png';
+import { useModal } from '../../context/ModalContext';
 import { TeacherLevels } from '../TeacherLevels/TeacherLevels';
 import {
     Text, 
@@ -19,6 +20,12 @@ import {
 
 export const TeacherDetails = ({ teacher }) => {
     const { selectedColor } = useColor();
+    const { openBookingModal } = useModal();
+
+    const handleBookTrialClick = () => {
+        openBookingModal(teacher);
+        document.body.classList.add('no-scroll');
+    };
 
     return (
         <>
@@ -45,7 +52,7 @@ export const TeacherDetails = ({ teacher }) => {
                 </ReviewWrapper>
             ))}
             <TeacherLevels levels={teacher.levels} />
-            <BookTrial type="button" $selcolor={selectedColor}>
+            <BookTrial type="button" $selcolor={selectedColor} onClick={handleBookTrialClick}>
                 Book trial lesson
             </BookTrial>
         </>

@@ -17,22 +17,43 @@ export const useModal = () => {
 
 export const ModalProvider = ({ children }) => {
     const [modalType, setModalType] = useState(null);
+    const [modalData, setModalData] = useState(null);
+
+    const allowedModalTypes = ['login', 'register', 'booking', 'noauth', null];
+
+    const setModalTypeSafe = (newType, newData) => {
+        if (allowedModalTypes.includes(newType)) {
+            setModalType(newType);
+            setModalData(newData);
+        } else {
+            console.error(`Invalid modalType: ${newType}`);
+        }
+    };
 
     const openLoginModal = () => {
-        setModalType('login');
+        setModalTypeSafe('login');
     };
 
     const openRegisterModal = () => {
-        setModalType('register');
+        setModalTypeSafe('register');
     };
 
+    const openBookingModal = (teacher) => {
+        setModalTypeSafe('booking', teacher);
+    }
+
+    const openNonAuthModal = () => {
+        setModalTypeSafe('noauth');
+    }
+
     const closeModal = () => {
-        setModalType(null);
+        setModalTypeSafe(null);
+        setModalData(null); 
     };
 
     return (
         <ModalContext.Provider
-            value={{ modalType, openLoginModal, openRegisterModal, closeModal }}
+            value={{ modalType, modalData, openLoginModal, openRegisterModal, openBookingModal, openNonAuthModal, closeModal }}
         >
             {children}
         </ModalContext.Provider>
