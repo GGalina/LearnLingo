@@ -1,10 +1,7 @@
-import { Teachers } from "../components/Teachers/Teachers";
+import { Teachers } from '../components/Teachers/Teachers';
 
 export const TeachersPage = () => {
-
   return (
-    <>
-      <Teachers/>
-    </>
+    <Teachers/>
   );
 };

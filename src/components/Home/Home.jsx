@@ -1,5 +1,5 @@
-import { useMediaQuery } from "react-responsive";
 import { HomeImg } from "../HomeImg/HomeImg";
+import { useMediaQuery } from "react-responsive";
 import { HomeStats } from "../HomeStats/HomeStats";
 import { HomeBanner } from "../HomeBanner/HomeBanner";
 import { HomeContainer, HeroWrapper } from "./Home.styled";

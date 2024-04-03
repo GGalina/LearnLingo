@@ -68,7 +68,7 @@ export const GreyAccent = styled.p`
 
 export const BookTrial = styled.button`
     font-family: 'Roboto-Bold', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 28px;
     color: #121417;
     padding: 16px 48px;
@@ -77,6 +77,21 @@ export const BookTrial = styled.button`
     border-radius: 12px;
     margin-top: 32px;
     cursor: pointer;
+
+    @media (min-width: 480px) {
+        font-size: 16px;
+        padding: 16px 48px;
+    }
+ 
+    @media (min-width: 768px) {
+        font-size: 18px;
+        padding: 16px 48px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 18px;
+        padding: 16px 48px;
+    }
 
     &:hover {
         transform: scale(1.1);

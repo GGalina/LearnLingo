@@ -1,14 +1,19 @@
-import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { useMediaQuery } from 'react-responsive';
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { useAuth } from "../../context/AuthContext";
 import { useColor } from '../../context/ColorContext';
 import { useModal } from '../../context/ModalContext';
-import { useAuth } from "../../context/AuthContext";
 import { LogOutAPI } from "../../services/firebaseAPI";
 import {
-  AuthContainer, LoginContainer,
-  LogIn, Register, LogOutContainer,
-  LogOutElement, TruncatedName,
-  Tooltip, WelcomeContainer
+  LogIn,
+  Tooltip,
+  Register,
+  LogOutElement,
+  TruncatedName,
+  AuthContainer,
+  LoginContainer,
+  LogOutContainer,
+  WelcomeContainer
 } from "./Auth.styled";
 
 export const Auth = ({ onClickClose }) => {

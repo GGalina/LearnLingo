@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { IoBookOutline } from 'react-icons/io5';
-import { FaStar, FaRegHeart } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
 import { useColor } from '../../context/ColorContext';
+import { FaStar, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { TeacherLevels } from '../TeacherLevels/TeacherLevels';
 import { TeacherDetails } from '../TeacherDetails/TeacherDetails';
+import { useFavoriteTeachers } from '../../context/FavoriteTeachersContext';
 import {
     Name,
     Text,
     Accent,
+    HeartWrap,
     GreyAccent,
     ImgContainer,
     ProfilePhoto,
@@ -21,15 +24,36 @@ import {
     TopInfoContainer,
     MainInfoContainer
 } from './TeacherCard.styled';
+import { useModal } from '../../context/ModalContext';
 
 export const TeacherCard = ({ teacher, isDesktop }) => {
-    const [showDetails, setShowDetails] = useState(false);
+    const { isLoggedIn } = useAuth();
     const { selectedColor } = useColor();
+    const { openNonAuthModal } = useModal();
+    const [showDetails, setShowDetails] = useState(false);
+    const { isFavorite, addToFavorites, removeFromFavorites } = useFavoriteTeachers();
 
     const handleShowDetails = () => {
         setShowDetails(true);
     };
 
+    const handleToggleFavorite = async () => {
+        try {
+            if (!isLoggedIn) {
+                openNonAuthModal();
+                document.body.classList.add('no-scroll');
+            } else {
+                if (isFavorite(teacher.id)) {
+                    await removeFromFavorites(teacher.id);
+                } else {
+                    await addToFavorites(teacher.id);
+                }
+            }
+        } catch (error) {
+            console.error('Error toggling favorite status:', error);
+        }
+    };   
+    
     return (
         <TeacherCardWrap key={teacher.id}>
             <ImgContainer $selcolor={selectedColor}>
@@ -52,7 +76,12 @@ export const TeacherCard = ({ teacher, isDesktop }) => {
                         <Text>Price / 1 hour: <Accent>{teacher.price_per_hour}$</Accent></Text>
                     </LessonsContainer> 
                 </LessonsWrapper>
-                <FaRegHeart width='26' height='26' fill='#121417'/>
+                <HeartWrap onClick={handleToggleFavorite}>
+                    {isFavorite(teacher.id) ?
+                        <FaHeart width='26' height='26' fill={selectedColor} /> :
+                        <FaRegHeart width='26' height='26' fill='#121417' />
+                    }
+                </HeartWrap>
             </TopInfoContainer>
             
             {!isDesktop &&

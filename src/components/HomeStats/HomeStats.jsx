@@ -1,7 +1,9 @@
 import { useColor } from '../../context/ColorContext';
 import {
-    Container, StatsWrapper,
-    Stats, StatsDesc
+    Stats,
+    StatsDesc,
+    Container,
+    StatsWrapper,
 } from './HomeStats.styled';
 
 

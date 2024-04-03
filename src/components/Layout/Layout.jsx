@@ -7,6 +7,7 @@ import { useModal } from '../../context/ModalContext';
 import { ColorProvider } from '../../context/ColorContext';
 import { ModalProvider } from '../../context/ModalContext';
 import { AuthProvider } from '../../context/AuthContext';
+import { FavoriteTeachersProvider } from '../../context/FavoriteTeachersContext'
 
 const LoginModal = lazy(() => import('../LoginModal/LoginModal').then(module => ({ default: module.LoginModal })));
 const RegistrationModal = lazy(() => import('../RegistrationModal/RegistrationModal').then(module => ({ default: module.RegistrationModal })));
@@ -16,14 +17,16 @@ const NonAuthModal = lazy(() => import('../NonAuthModal/NonAuthModal').then(modu
 export const Layout = ({ children }) => (
   <AuthProvider>
     <ColorProvider>
-      <ModalProvider>
-        <Header />
-        <Suspense fallback={<Loader />}>
-          {children}
-          <Outlet />
-        <ModalRenderer />
-        </Suspense>
-      </ModalProvider>
+      <FavoriteTeachersProvider>
+        <ModalProvider>
+          <Header />
+          <Suspense fallback={<Loader />}>
+            {children}
+            <Outlet />
+          <ModalRenderer />
+          </Suspense>
+        </ModalProvider>
+      </FavoriteTeachersProvider>
     </ColorProvider>
     <ToastContainer
       position="top-right"

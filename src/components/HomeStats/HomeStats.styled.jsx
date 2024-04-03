@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    min-width: 320px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 32px;
@@ -16,12 +16,7 @@ export const Container = styled.div`
     padding: 40px;
     gap: 50px;
 
-    @media (min-width: 480px) {
-        width: 480px; 
-    }
-
     @media (min-width: 768px) {
-        width: 768px;
         flex-direction: row;
         flex-wrap: wrap;
     }
@@ -43,9 +38,21 @@ export const StatsWrapper = styled.div`
 
 export const Stats = styled.p`
     font-family: 'Roboto-Medium', sans-serif;
-    font-size: 28px;
+    font-size: 20px;
     line-height: 32px;
     color: #121417;
+
+     @media (min-width: 480px) {
+       font-size: 28px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 28px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 28px;
+    } 
 `;
 
 export const StatsDesc = styled.p`

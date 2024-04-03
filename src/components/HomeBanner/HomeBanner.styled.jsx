@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
-    min-width: 320px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 24px;
@@ -10,19 +10,16 @@ export const Container = styled.div`
     border: 1px solid #F8F8F8;
     border-radius: 30px;
     background-color: #F8F8F8;
-    padding: 98px 0 98px 64px;
-
-    @media (min-width: 480px) {
-        width: 480px; 
-    }
+    padding: 40px;
 
     @media (min-width: 768px) {
-        width: 767px;
+        padding: 98px 0 98px 64px;
     }
 
     @media (min-width: 1280px) {
         width: 720px;
         height: 530px;
+        padding: 98px 0 98px 64px;
     } 
 `;
 
@@ -59,10 +56,10 @@ export const Descr = styled.p`
 
 export const NavigationLink = styled(NavLink)`
     font-family: 'Roboto-Bold', sans-serif;
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 20px;
     color: #121417;
-    padding: 16px 88px;
+    padding: 16px 40px;
     border: 1px solid ${({ $selcolor }) => $selcolor || '#F4C550'};
     border-radius: 12px;
     background-color: ${({ $selcolor }) => $selcolor || '#F4C550'};
@@ -71,6 +68,12 @@ export const NavigationLink = styled(NavLink)`
 
     &:hover {
         transform: scale(1.1);
+    }
+
+    @media (min-width: 480px) {
+        font-size: 18px;
+        line-height: 28px;
+        padding: 16px 88px;
     }
 `;
 

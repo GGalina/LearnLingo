@@ -2,20 +2,26 @@ import * as Yup from 'yup';
 import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { IoMdClose } from 'react-icons/io';
+import { Backdrop } from '../Backdrop/Backdrop';
+import { useAuth } from '../../context/AuthContext';
 import { useColor } from '../../context/ColorContext';
 import { useModal } from '../../context/ModalContext';
-import { Backdrop } from '../Backdrop/Backdrop';
 import { LoginAPI } from '../../services/firebaseAPI';
-import { useAuth } from '../../context/AuthContext';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-
 import {
-  LoginContainer, CloseIcon,
-  Header, Desc, Form,
-  Email, Password, LoginBtn,
-  PasswordContainer, FormWrapper,
-  EmailErrorMsg, PasswordErrorMsg,
-  EmailWrapper
+    Desc,
+    Form,
+    Email,
+    Header, 
+    LoginBtn,
+    Password,
+    CloseIcon,
+    FormWrapper,
+    EmailWrapper, 
+    EmailErrorMsg,
+    LoginContainer,
+    PasswordErrorMsg,
+    PasswordContainer, 
 } from './LoginModal.styled';
 
 const LoginSchema = Yup.object().shape({

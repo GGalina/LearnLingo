@@ -1,7 +1,7 @@
 import React, {
-createContext,
-useState,
-useContext
+    useState,
+    useContext,
+    createContext,
 } from 'react';
 
 const ModalContext = createContext();

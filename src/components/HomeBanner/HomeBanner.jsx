@@ -1,8 +1,11 @@
 import { useColor } from '../../context/ColorContext';
 import {
-    Title, Accent,
-    Descr, NavigationLink,
-    Container, BackgroundAccent
+    Descr,
+    Title,
+    Accent,
+    Container,
+    NavigationLink,
+    BackgroundAccent
 } from './HomeBanner.styled';
 
 export const HomeBanner = () => {

@@ -1,9 +1,9 @@
 import React,
 {
-    createContext,
-    useContext,
+    useState,
     useEffect,
-    useState
+    useContext,
+    createContext,
 } from 'react';
 
 const ColorContext = createContext();
@@ -22,7 +22,8 @@ export const ColorProvider = ({ children }) => {
 
     useEffect(() => {
         const generateColorPalette = () => {
-            const colorPalette = ['#F4C550', '#FBE9BA', '#9FBAAE',
+            const colorPalette = [
+                '#F4C550', '#FBE9BA', '#9FBAAE',
                 '#CBDED3', '#9FB7CE', '#BFD6EA',
                 '#E0A39A', '#F2C0BD', '#F0AA8D',
                 '#F4C8BA'];

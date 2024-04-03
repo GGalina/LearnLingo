@@ -1,15 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback
+} from 'react';
+import { Logo } from '../Logo/Logo';
+import { Auth } from '../Auth/Auth';
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useMediaQuery } from 'react-responsive';
-import { Logo } from '../Logo/Logo';
-import { Auth } from '../Auth/Auth';
 import { Navigation } from '../Navigation/Navigation';
 import {
-  HeaderContainer, Container,
-  HeaderWrapper, SlideMenu,
-  CloseIcon, MenuWrapper,
-  BackdropOverlay
+  SlideMenu,
+  CloseIcon,
+  Container,
+  MenuWrapper,
+  HeaderWrapper,
+  BackdropOverlay,
+  HeaderContainer,
 } from './Header.styled';
 
 export const Header = () => {

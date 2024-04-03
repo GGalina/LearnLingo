@@ -53,6 +53,7 @@ export const TopInfoContainer = styled.div`
     display: flex;
     gap: 20px;
     align-items: center;
+    justify-content: space-between;
 
     @media (min-width: 480px) {
         position: absolute;
@@ -195,4 +196,8 @@ export const ReadMoreBtn = styled.button`
     width: fit-content;
     cursor: pointer;
     margin-bottom: 32px;
+`;
+
+export const HeartWrap = styled.div`
+    cursor: pointer;
 `;

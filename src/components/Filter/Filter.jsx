@@ -1,51 +1,91 @@
-import React, { useState } from 'react';
+import React, {  useEffect,useState, useCallback } from 'react';
+import { useColor } from '../../context/ColorContext';
+import { Label, CustomSelect, FilterContainer, FilterItemWrapper } from './Filter.styled';
 
-export const Filter = () => {
+export const Filter = ({ onFilterChange }) => {
+  const { selectedColor } = useColor();
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
 
-  const handleLanguageChange = (event) => {
-    setSelectedLanguage(event.target.value);
+ const handleLanguageChange = (selectedOption) => {
+    setSelectedLanguage(selectedOption);
+    onFilterChange({ language: selectedOption.value, level: selectedLevel, price: selectedPrice });
   };
 
-  const handleLevelChange = (event) => {
-    setSelectedLevel(event.target.value);
+  const handleLevelChange = (selectedOption) => {
+    setSelectedLevel(selectedOption);
+    onFilterChange({ language: selectedLanguage, level: selectedOption.value, price: selectedPrice });
   };
 
-  const handlePriceChange = (event) => {
-    setSelectedPrice(event.target.value);
+  const handlePriceChange = (selectedOption) => {
+    setSelectedPrice(selectedOption);
+    onFilterChange({ language: selectedLanguage, level: selectedLevel, price: selectedOption.value });
+    console.log(selectedOption)
   };
+
+  const languageOptions = [
+    { value: 'French', label: 'French' },
+    { value: 'English', label: 'English' },
+    { value: 'German', label: 'German' },
+    { value: 'Ukrainian', label: 'Ukrainian' },
+    { value: 'Polish', label: 'Polish' },
+  ];
+
+  const levelOptions = [
+    { value: 'A1 Beginner', label: 'A1 Beginner' },
+    { value: 'A2 Elementary', label: 'A2 Elementary' },
+    { value: 'B1 Intermediate', label: 'B1 Intermediate' },
+    { value: 'B2 Upper-Intermediate', label: 'B2 Upper-Intermediate' },
+  ];
+
+  const priceOptions = [
+    { value: '10', label: '10$' },
+    { value: '20', label: '20$' },
+    { value: '30', label: '30$' },
+    { value: '40', label: '40$' },
+  ];
 
   return (
-    <>
-      <label htmlFor="language">Languages:</label>
-      <select id="language" value={selectedLanguage} onChange={handleLanguageChange}>
-        <option value="">Select a language</option>
-        <option value="French">French</option>
-        <option value="English">English</option>
-        <option value="German">German</option>
-        <option value="Ukrainian">Ukrainian</option>
-        <option value="Polish">Polish</option>
-      </select>
+    <FilterContainer>
+      <FilterItemWrapper>
+        <Label htmlFor="language">Languages:</Label>
+        <CustomSelect
+          id="language"
+          value={selectedLanguage}
+          onChange={handleLanguageChange}
+          options={languageOptions}
+          $selcolor={selectedColor}
+          classNamePrefix="react-select"
+          className="react-select-container"
+        />
+      </FilterItemWrapper>
 
-      <label htmlFor="level">Level of Knowledge:</label>
-      <select id="level" value={selectedLevel} onChange={handleLevelChange}>
-        <option value="">Select a level</option>
-        <option value="A1">A1 Beginner</option>
-        <option value="A2">A2 Elementary</option>
-        <option value="B1">B1 Intermediate</option>
-        <option value="B2">B2 Upper-Intermediate</option>
-      </select>
+      <FilterItemWrapper>
+        <Label htmlFor="level">Level of Knowledge:</Label>
+        <CustomSelect
+          id="level"
+          value={selectedLevel}
+          onChange={handleLevelChange}
+          options={levelOptions}
+          $selcolor={selectedColor}
+          classNamePrefix="react-select"
+          className="react-select-container"
+        />
+      </FilterItemWrapper>
 
-      <label htmlFor="price">Price:</label>
-      <select id="price" value={selectedPrice} onChange={handlePriceChange}>
-        <option value="">Select a price</option>
-        <option value="10">$10</option>
-        <option value="20">$20</option>
-        <option value="30">$30</option>
-        <option value="40">$40</option>
-      </select>
-    </>
+      <FilterItemWrapper>
+        <Label htmlFor="price">Price:</Label>
+        <CustomSelect
+          id="price"
+          value={selectedPrice}
+          onChange={handlePriceChange}
+          options={priceOptions}
+          $selcolor={selectedColor}
+          classNamePrefix="react-select"
+          className="react-select-container"
+        />
+      </FilterItemWrapper>
+    </FilterContainer>
   );
 };

@@ -2,20 +2,29 @@ import * as Yup from 'yup';
 import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { IoMdClose } from 'react-icons/io';
-import { RegisterAPI } from '../../services/firebaseAPI'; 
-import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { Backdrop } from '../Backdrop/Backdrop';
+import { useAuth } from '../../context/AuthContext';
 import { useColor } from '../../context/ColorContext';
 import { useModal } from '../../context/ModalContext';
-import { useAuth } from '../../context/AuthContext';
-import { Backdrop } from '../Backdrop/Backdrop';
+import { RegisterAPI } from '../../services/firebaseAPI'; 
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import {
-  RegisterContainer, CloseIcon,
-  Header, Desc, Form,
-  Email, Password, SignUpBtn,
-  PasswordContainer, FormWrapper,
-  NameWrapper, Name, NameErrorMsg,
-  EmailErrorMsg, PasswordErrorMsg,
-  EmailWrapper
+  Desc,
+  Form,
+  Name,
+  Email,
+  Header,
+  Password,
+  CloseIcon,
+  SignUpBtn,
+  FormWrapper,
+  NameWrapper,
+  NameErrorMsg,
+  EmailWrapper,
+  EmailErrorMsg,
+  PasswordErrorMsg,
+  PasswordContainer,
+  RegisterContainer, 
 } from './RegistrationModal.styled';
 
 const RegistrationSchema = Yup.object().shape({
@@ -23,7 +32,7 @@ const RegistrationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
   password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
     'Password must be at least 8 characters with a number and a letter')
-    .required('Password is required and must be at least 8 characters with a number and a letter'),
+    .required('Password must be at least 8 characters with a number and a letter'),
 });
 
 export const RegistrationModal = () => {
