@@ -62,7 +62,7 @@ export const RegistrationModal = () => {
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('registeredUserName', name);
 
-      closeModal();
+      handleClose();
     } catch (error) {
       throw new Error(error);
     }

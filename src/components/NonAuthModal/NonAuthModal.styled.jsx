@@ -77,3 +77,5 @@ export const Btn = styled.button`
     font-size: 18px;
     line-height: 28px; 
 `;
+
+export const Wrapper = styled.div``;

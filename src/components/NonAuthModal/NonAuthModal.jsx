@@ -7,6 +7,7 @@ import {
     Btn,
     Desc,
     Header,
+    Wrapper,
     CloseIcon,
     BtnContainer,
     ModalContainer
@@ -26,8 +27,8 @@ export const NonAuthModal = () => {
     };
 
     const handleClose = () => {
-        document.body.classList.remove('no-scroll');
         closeModal();
+        document.body.classList.remove('no-scroll');
     };
 
     useEffect(() => {
@@ -52,8 +53,12 @@ export const NonAuthModal = () => {
             <Header>Please register or log in to continue.</Header>
                 <Desc>Looks like you are not logged in. Please login or register to enjoy all the functionality of LearnLingo.</Desc>
                 <BtnContainer>
-                    <Btn type="submit" $selcolor={selectedColor} onClick={() => handleModalClick('login')}>Log In</Btn>
-                    <Btn type="submit" $selcolor={selectedColor} onClick={() => handleModalClick('register')}>Registration</Btn>
+                    <Wrapper onClick={() => handleModalClick('login')}>
+                        <Btn $selcolor={selectedColor}>Log In</Btn>
+                    </Wrapper>
+                    <Wrapper onClick={() => handleModalClick('register')}>
+                        <Btn $selcolor={selectedColor} >Registration</Btn>
+                    </Wrapper>
                 </BtnContainer>
         </ModalContainer>
     </Backdrop>

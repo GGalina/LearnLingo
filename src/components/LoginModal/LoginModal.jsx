@@ -56,7 +56,7 @@ export const LoginModal = () => {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('registeredUserName', userName);
 
-            closeModal();
+            handleClose();
         } catch (error) {
             throw new Error(error);
         }

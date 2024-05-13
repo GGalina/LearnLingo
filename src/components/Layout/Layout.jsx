@@ -7,7 +7,7 @@ import { useModal } from '../../context/ModalContext';
 import { ColorProvider } from '../../context/ColorContext';
 import { ModalProvider } from '../../context/ModalContext';
 import { AuthProvider } from '../../context/AuthContext';
-import { FavoriteTeachersProvider } from '../../context/FavoriteTeachersContext'
+import { FavoriteTeachersProvider } from '../../context/FavoriteTeachersContext';
 
 const LoginModal = lazy(() => import('../LoginModal/LoginModal').then(module => ({ default: module.LoginModal })));
 const RegistrationModal = lazy(() => import('../RegistrationModal/RegistrationModal').then(module => ({ default: module.RegistrationModal })));

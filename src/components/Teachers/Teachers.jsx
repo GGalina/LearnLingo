@@ -27,12 +27,10 @@ export const Teachers = () => {
     useEffect(() => {
         const fetchInitialTeachers = async () => {
           try {
-              console.log('we tt')
               setIsLoading(true);
               
               const initialTeachers = await fetchTeachersAPI(null);
               setTeachers(initialTeachers);
-              console.log(initialTeachers);
 
                 if (initialTeachers.length > 0) {
                     const lastFetchedValue = initialTeachers[initialTeachers.length - 1].id;

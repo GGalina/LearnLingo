@@ -41,7 +41,6 @@ export const TeacherCard = ({ teacher, isDesktop }) => {
         try {
             if (!isLoggedIn) {
                 openNonAuthModal();
-                document.body.classList.add('no-scroll');
             } else {
                 if (isFavorite(teacher.id)) {
                     await removeFromFavorites(teacher.id);
@@ -93,7 +92,7 @@ export const TeacherCard = ({ teacher, isDesktop }) => {
                     <MainInfoContainer>
                         <TextWrapper>
                             <GreyAccent>Speaks: </GreyAccent>
-                            <UnderlinedText>{teacher.languages.join(', ')}</UnderlinedText>
+                        <UnderlinedText>{teacher.languages ? teacher.languages.join(', ') : ''}</UnderlinedText>
                         </TextWrapper>
                         <TextWrapper>
                             <GreyAccent>Lesson Info: </GreyAccent>
@@ -101,7 +100,7 @@ export const TeacherCard = ({ teacher, isDesktop }) => {
                         </TextWrapper>
                         <TextWrapper>
                             <GreyAccent>Conditions: </GreyAccent>
-                            <Text>{teacher.conditions.join(' ')}</Text>
+                            <Text>{teacher.conditions ? teacher.conditions.join(' ') : ''}</Text>
                     </TextWrapper>
                     {showDetails && <TeacherDetails teacher={teacher} />}
                     <ReadMoreBtn $showdetails={showDetails} onClick={handleShowDetails}>

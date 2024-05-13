@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import firebase from "firebase/compat/app";
 import { firebaseConfig } from './firebaseConfig';
 import {
-  getDatabase, ref, get, doc, set,
-  query, orderByChild, remove,
-  startAfter, limitToFirst, equalTo, startAt, where
+  getDatabase, ref, get, set,
+  query, orderByChild,  orderByKey,
+  startAfter, limitToFirst, equalTo
 } from 'firebase/database';
 
 // Initialize Firebase
@@ -70,7 +70,6 @@ export const fetchTeachersAPI = async (lastFetched, batchSize = 4) => {
   try {
     const teachersRef = ref(db, 'teachers');
     let teachersQuery;
-    console.log("hehehe")
     if (lastFetched) {
       teachersQuery = query(
         teachersRef,
@@ -126,12 +125,13 @@ export const addToFavoritesAPI = async (teacherId) => {
 
     const userId = user.uid;
     const favoritesRef = ref(db, `users/${userId}/favorites`);
+    const orderedFavoritesRef = query(favoritesRef, orderByKey());
 
-    const snapshot = await get(favoritesRef);
+    const snapshot = await get(orderedFavoritesRef);
     const currentFavorites = snapshot.exists() ? snapshot.val() : [];
 
     const updatedFavorites = [...currentFavorites, teacherId];
-    await set(favoritesRef, updatedFavorites);
+    await set(orderedFavoritesRef, updatedFavorites);
     toast.success('Teacher added to favorites.');
     return updatedFavorites;
   } catch (error) {
@@ -161,6 +161,7 @@ export const removeFromFavoritesAPI = async (teacherId) => {
         await set(favoritesRef, favoritesArray); 
 
         toast('Teacher removed from favorites.');
+        return favoritesArray;
       } else {
         toast.info('Teacher is not in favorites.');
       }
@@ -173,7 +174,7 @@ export const removeFromFavoritesAPI = async (teacherId) => {
   }
 };
 
-export const getFavoriteTeachersAPI = async (lastFetched, batchSize = 4) => {
+export const getFavoriteTeachersAPI = async () => {
   try {
     const user = auth.currentUser;
 
@@ -193,28 +194,15 @@ export const getFavoriteTeachersAPI = async (lastFetched, batchSize = 4) => {
     });
 
     const teachers = [];
-    let remainingBatchSize = batchSize;
 
     for (const teacherId of favoriteTeacherIds) {
-      if (remainingBatchSize === 0) {
-        break; // Stop fetching if the batch size limit is reached
-      }
-
       const teachersQuery = query(ref(db, 'teachers'), orderByChild('id'), equalTo(teacherId));
-
-      let snapshot;
-      if (lastFetched) {
-        snapshot = await get(teachersQuery, startAfter(lastFetched), limitToFirst(remainingBatchSize));
-      } else {
-        snapshot = await get(teachersQuery, limitToFirst(remainingBatchSize));
-      }
+      const snapshot = await get(teachersQuery);
 
       snapshot.forEach((teacherChildSnapshot) => {
         const teacherData = teacherChildSnapshot.val();
         teachers.push(teacherData);
       });
-
-      remainingBatchSize -= snapshot.size;
     }
     return teachers;
   } catch (error) {
@@ -230,46 +218,9 @@ export const getFavoriteTeachersAPI = async (lastFetched, batchSize = 4) => {
 
 
 
-// export const fetchFilteredTeachersAPI = async (batchSize = 4, filters = {}, lastFetched) => {
-//   try {
-//     const teachersRef = ref(db, 'teachers');
-//     let teachersQuery = query(teachersRef, orderByChild('id'));
 
-//    switch (true) {
-//   case filters.language && filters.level:
-//     teachersQuery = query(teachersQuery, equalTo('language', filters.language), equalTo('levels', filters.level));
-//     break;
 
-//   case filters.language !== undefined && filters.language !== '':
-//   teachersQuery = query(teachersQuery, equalTo('languages', filters.language));
-//   console.log('teachersQuery', teachersQuery);
-//   break;
 
-//   default:
-//     console.log('Default case');
-// }
-//     if (lastFetched) {
-//       teachersQuery = query(teachersQuery, startAfter(lastFetched));
-//     }
-
-//     teachersQuery = query(teachersQuery, limitToFirst(batchSize));
-
-//     const snapshot = await get(teachersQuery);
-//     const response = [];
-
-//     snapshot.forEach((childSnapshot) => {
-//       const data = childSnapshot.val();
-//       response.push({ id: childSnapshot.key, ...data });
-//     });
-
-//     console.log('response', response);
-//     return response;
-//   } catch (error) {
-//     console.log('Error fetching teachers:', error);
-//     toast.error('Error fetching teachers:');
-//     throw new Error('Error fetching teachers:', error);
-//   }
-// };
 
 
 export const fetchFilteredTeachersAPI = async (batchSize = 4, filters = {}, lastFetched) => {
@@ -277,7 +228,6 @@ export const fetchFilteredTeachersAPI = async (batchSize = 4, filters = {}, last
     const teachersRef = ref(db, 'teachers');
     let teachersQuery = query(teachersRef, orderByChild('id'));
 
-    // Helper functions for applying individual filters
     const applyLanguageFilter = (query, language) => query(teachersQuery, equalTo('languages', language));
     const applyLevelFilter = (query, level) => query(teachersQuery, equalTo('levels', level));
     // Add more helper functions as needed for different filters

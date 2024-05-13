@@ -2,82 +2,42 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../Loader/Loader';
 import { useMediaQuery } from 'react-responsive';
 import { useColor } from '../../context/ColorContext';
-import { useAuth } from '../../context/AuthContext';
 import { TeachersList } from '../TeachersList/TeachersList';
-import { getFavoriteTeachersAPI} from '../../services/firebaseAPI';
-import {
-  Container,
-  LoadMore
-} from './Favorites.styled';
+import { useFavoriteTeachers } from '../../context/FavoriteTeachersContext';
+import { Text, LoadMore, Container } from './Favorites.styled';
 
 export const Favorites = () => {
-    const { isLoggedIn } = useAuth();
+    const batchSize = 4;
+    const [page, setPage] = useState(1);
     const { selectedColor } = useColor();
-    const [teachers, setTeachers] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [lastFetched, setLastFetched] = useState(null);
+    const [allTeachers, setAllTeachers] = useState([]);
+    const { favoriteTeachers, isLoading } = useFavoriteTeachers();
     const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
     useEffect(() => {
-        const fetchFavoriteTeachers = async () => {
-            try {
-                if (isLoggedIn) {
-                    setIsLoading(true);
-                    const initialTeachers = await getFavoriteTeachersAPI(null);
-                    setTeachers(initialTeachers);
+        setAllTeachers(favoriteTeachers.slice(0, page * batchSize));
+    }, [favoriteTeachers, page]);
 
-                    if (initialTeachers.length > 0) {
-                        const lastFetchedValue = initialTeachers[initialTeachers.length - 1].id;
-                        setLastFetched(lastFetchedValue);
-                    } else {
-                        setHasMore(false);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching initial teachers:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchFavoriteTeachers();
-    }, []);
-
-    const loadMoreTeachers = async () => {
-        try {
-            setIsLoading(true);
-
-            if (lastFetched === null || lastFetched === undefined) {
-                console.error('Error fetching teachers: lastFetched is null or undefined');
-                return;
-            }
-
-            const newTeachers = await getFavoriteTeachersAPI(teachers[teachers.length - 1].id);
-
-            if (newTeachers.length > 0) {
-                setTeachers((prevTeachers) => [...prevTeachers, ...newTeachers]);
-                setLastFetched(newTeachers[newTeachers.length - 1].id);
-            } else {
-                // No more teachers to load
-                setHasMore(false);
-            }
-        } catch (error) {
-            console.error('Error fetching teachers:', error);
-        } finally {
-            setIsLoading(false);
-        }
+    const loadMoreTeachers = () => {
+        setPage(prevPage => prevPage + 1);
     };
 
-  return (
-    <Container>
-      <TeachersList teachers={teachers} isDesktop={isDesktop} />
-      {!isLoading && hasMore && (
-        <LoadMore $selcolor={selectedColor} type="button" onClick={loadMoreTeachers}>
-          Load more
-        </LoadMore>
-      )}
-      {isLoading && <Loader />}
-    </Container>
-  );
+    return (
+        <Container>
+            {isLoading && <Loader />}
+
+            {!isLoading && favoriteTeachers.length === 0 ? (
+                <Text>No favorite teachers found.</Text>
+            ) : (
+                <>
+                    <TeachersList teachers={allTeachers} isDesktop={isDesktop} />
+                    {favoriteTeachers.length > allTeachers.length && (
+                        <LoadMore $selcolor={selectedColor} type="button" onClick={loadMoreTeachers}>
+                            Load more
+                        </LoadMore>
+                    )}
+                </>
+            )}
+        </Container>
+    );
 };

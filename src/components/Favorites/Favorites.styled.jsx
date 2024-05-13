@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100%;
+    min-height: 100vh;
     margin-right: auto;
     margin-left: auto;
     background-color: #EEEEEE;
@@ -48,4 +49,14 @@ export const LoadMore = styled.button`
     &:hover {
         transform: scale(1.1);
     }
+`;
+
+export const Text = styled.p`
+    font-family: 'Roboto-Medium', sans-serif;
+    font-size: 28px;
+    line-height: 48px;
+    letter-spacing: -0.8px; 
+    align-items: center;
+    margin-top: 50px;
+    color: #121417;
 `;
