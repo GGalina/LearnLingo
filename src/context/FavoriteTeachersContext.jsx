@@ -58,7 +58,6 @@ export const FavoriteTeachersProvider = ({ children }) => {
         }
     };
 
-
     const removeFromFavorites = async (teacherId) => {
         try {
             await removeFromFavoritesAPI(teacherId);

@@ -1,9 +1,9 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyDwdxYiaKK4G8rB7v-ur4FQNcEPIAkf5QI",
-    authDomain: "learnlingo-36979.firebaseapp.com",
-    projectId: "learnlingo-36979",
-    storageBucket: "learnlingo-36979.appspot.com",
-    messagingSenderId: "352672600443",
-    appId: "1:352672600443:web:80c9405e6e990d77f8adde",
-    databaseURL: "https://learnlingo-36979-default-rtdb.firebaseio.com"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL
 };

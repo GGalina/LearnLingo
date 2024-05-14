@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Loader } from '../Loader/Loader';
+import { Filter } from '../Filter/Filter';
 import { useMediaQuery } from 'react-responsive';
 import { useColor } from '../../context/ColorContext';
 import { fetchTeachersAPI, fetchAllTeachersAPI } from '../../services/firebaseAPI';
-import { Filter } from '../Filter/Filter';
 import { TeachersList } from '../TeachersList/TeachersList';
 import {
   LoadMore,
