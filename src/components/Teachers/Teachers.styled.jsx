@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const TeachersContainer = styled.div`
     width: 100%;
+    min-height: 100vh;
     margin-right: auto;
     margin-left: auto;
     background-color: #EEEEEE;
@@ -48,4 +49,13 @@ export const LoadMore = styled.button`
     &:hover {
         transform: scale(1.1);
     }
+`;
+
+export const NoResults = styled.p`
+    font-family: 'Roboto-Bold', sans-serif;
+    font-size: 24px;
+    line-height: 28px;
+    color: #121417;
+    text-align: center;
+    padding-top: 30px;
 `;

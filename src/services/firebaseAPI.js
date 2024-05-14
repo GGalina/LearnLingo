@@ -7,7 +7,7 @@ import { firebaseConfig } from './firebaseConfig';
 import {
   getDatabase, ref, get, set,
   query, orderByChild,  orderByKey,
-  startAfter, limitToFirst, equalTo
+  startAfter, limitToFirst, equalTo,
 } from 'firebase/database';
 
 // Initialize Firebase
@@ -211,76 +211,25 @@ export const getFavoriteTeachersAPI = async () => {
   }
 };
 
+//----------------------------------------------Filters-------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-export const fetchFilteredTeachersAPI = async (batchSize = 4, filters = {}, lastFetched) => {
+export const fetchAllTeachersAPI = async () => {
   try {
     const teachersRef = ref(db, 'teachers');
-    let teachersQuery = query(teachersRef, orderByChild('id'));
+    const teachersQuery = query(teachersRef, orderByChild('id'));
 
-    const applyLanguageFilter = (query, language) => query(teachersQuery, equalTo('languages', language));
-    const applyLevelFilter = (query, level) => query(teachersQuery, equalTo('levels', level));
-    // Add more helper functions as needed for different filters
-
-    // Apply pagination logic
-    if (lastFetched) {
-      teachersQuery = query(teachersQuery, startAfter(lastFetched));
-    }
-
-    teachersQuery = query(teachersQuery, limitToFirst(batchSize));
-
-    // Apply additional filters based on conditions
-    switch (true) {
-      case filters.language && filters.level:
-        // Apply language and level filters
-        teachersQuery = applyLanguageFilter(teachersQuery, filters.language);
-        teachersQuery = applyLevelFilter(teachersQuery, filters.level);
-        break;
-
-      case filters.language:
-        // Apply language filter
-        teachersQuery = applyLanguageFilter(teachersQuery, filters.language);
-        break;
-
-      case filters.level:
-        // Apply level filter
-        teachersQuery = applyLevelFilter(teachersQuery, filters.level);
-        break;
-
-      // Add more cases as needed for different combinations
-
-      default:
-        // No specific combination, apply default logic
-    }
-
-    // Fetch the data based on the modified query
     const snapshot = await get(teachersQuery);
-
-    // Process the snapshot and get the results
     const response = [];
+
     snapshot.forEach((childSnapshot) => {
       const data = childSnapshot.val();
-      response.push({ id: childSnapshot.key, ...data });
+      const id = data.id; 
+      response.push({ id, ...data });
     });
 
-    console.log('response', response);
     return response;
   } catch (error) {
-    console.log('Error fetching teachers:', error);
     toast.error('Error fetching teachers:');
     throw new Error('Error fetching teachers:', error);
   }
 };
-
-
-

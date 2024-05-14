@@ -2,22 +2,25 @@ import { useEffect, useState } from 'react';
 import { Loader } from '../Loader/Loader';
 import { useMediaQuery } from 'react-responsive';
 import { useColor } from '../../context/ColorContext';
-import { fetchTeachersAPI, fetchFilteredTeachersAPI } from '../../services/firebaseAPI';
+import { fetchTeachersAPI, fetchAllTeachersAPI } from '../../services/firebaseAPI';
 import { Filter } from '../Filter/Filter';
 import { TeachersList } from '../TeachersList/TeachersList';
 import {
   LoadMore,
-  TeachersContainer
+  NoResults,
+  TeachersContainer,
 } from './Teachers.styled';
 
 export const Teachers = () => {
+    const batchSize = 4;
+    const [page, setPage] = useState(1);
     const { selectedColor } = useColor();
     const [teachers, setTeachers] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [lastFetched, setLastFetched] = useState(null);
     const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
-
+    const [filteredTeachers, setFilteredTeachers] = useState([]);
     const [filters, setFilters] = useState({
         language: '',
         level: '',
@@ -63,7 +66,6 @@ export const Teachers = () => {
                 setTeachers((prevTeachers) => [...prevTeachers, ...newTeachers]);
                 setLastFetched(newTeachers[newTeachers.length - 1].id);
             } else {
-                // No more teachers to load
                 setHasMore(false);
             }
         } catch (error) {
@@ -72,101 +74,69 @@ export const Teachers = () => {
             setIsLoading(false);
         }
     };
+  
+    const handleFilterChange = async (filters) => {
+      try {
+        setPage(1);
+        setIsLoading(true);
+        setFilters(filters);
+        setTeachers([]); // Reset teachers array
+        setHasMore(true); // Reset hasMore flag
+        setLastFetched(null); // Reset lastFetched value
 
-    const handleFilterChange = async (newFilters) => {
-  try {
-    setFilters(newFilters);
-    setTeachers([]); // Reset teachers array
-    setHasMore(true); // Reset hasMore flag
-    setLastFetched(null); // Reset lastFetched value
+        const allTeachers = await fetchAllTeachersAPI();
 
-    const filteredTeachers = await fetchFilteredTeachersAPI(4, newFilters);
+        const filteredTeachers = allTeachers.filter((teacher) => {
+          let match = true;
 
-    if (filteredTeachers.length > 0) {
-      setTeachers(filteredTeachers);
-      setLastFetched(filteredTeachers[filteredTeachers.length - 1].id);
-    } else {
-      setHasMore(false);
-    }
-  } catch (error) {
-    console.error('Error handling filter change:', error);
-    // Handle error as needed
-  }
-};
+          if (filters.language !== undefined && !teacher.languages.includes(filters.language)) {
+            match = false;
+          }
 
+          if (filters.level !== undefined && filters.level !== '' && !teacher.levels.includes(filters.level)) {
+            match = false;
+          }
 
-    // const handleFilterChange = async (newFilters) => {
-    //     setFilters(newFilters);
-    //     setTeachers([]); // Reset teachers array
-    //     setHasMore(true); // Reset hasMore flag
-    //     setLastFetched(null); // Reset lastFetched value
+          if (filters.price !== undefined && filters.price !== '') {
+            const priceRange = parseInt(filters.price);
+            const teacherPrice = parseInt(teacher.price_per_hour);
 
-    //     let allTeachers;
-    //     // Fetch initial set of data
-    //     allTeachers = await fetchFilteredTeachersAPI(null, 4); // Fetch a larger set initially
+            if (teacherPrice < priceRange || teacherPrice >= priceRange + 10) {
+              match = false;
+            }
+          }
 
-    //     // Apply first filter
-    //     if (newFilters.language) {
-    //         allTeachers = allTeachers.filter((teacher) => teacher.languages.includes(newFilters.language));
-    //     }
+          return match;
+        });
 
-    //     // Apply second filter
-    //     if (newFilters.level) {
-    //         allTeachers = allTeachers.filter((teacher) => teacher.levels.includes(newFilters.level));
-    //     }
+        setFilteredTeachers(filteredTeachers);
 
-    //     if (newFilters.price) {
-    //         // Define price categories
-    //         const priceCategories = {
-    //             '10': [0, 19],
-    //             '20': [20, 29],
-    //             '30': [30, 39],
-    //             '40': [40, 49]
-    //             // Add more categories as needed
-    //         };
-
-    //         // Filter based on price categories
-    //         const [minPrice, maxPrice] = priceCategories[newFilters.price];
-    //         allTeachers = allTeachers.filter(
-    //             (teacher) => teacher.price_per_hour >= minPrice && teacher.price_per_hour <= maxPrice
-    //         );
-    //     }
-
-    //     // Update state with the filtered data
-    //     setTeachers((prevTeachers) => [...prevTeachers, ...allTeachers.slice(0, 4)]);
-    //     setLastFetched(allTeachers[allTeachers.length - 1]?.id);
-    // }
-
-
-
-
-
-const loadMoreFilteredTeachers = async () => {
-  try {
-      setIsLoading(true);
-
-      if (lastFetched === null || lastFetched === undefined) {
-        console.error('Error fetching teachers: lastFetched is null or undefined');
-        return;
+        if (filteredTeachers.length > 0 && filteredTeachers.length > 4) {
+          setTeachers(filteredTeachers.slice(0, batchSize));
+        } else if (filteredTeachers.length > 0 && filteredTeachers.length <= 4) {
+          setTeachers(filteredTeachers);
+          setHasMore(false);
+        } else if (filteredTeachers.length === 0) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.error('Error handling filter change:', error);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      const newTeachers = await fetchTeachersAPI(teachers[teachers.length - 1].id);
-      
-      if (newTeachers.length > 0) {
-        setTeachers((prevTeachers) => [...prevTeachers, ...newTeachers]);
-        setLastFetched(newTeachers[newTeachers.length - 1].id);
+    const loadMoreFilteredTeachers = () => {
+      const nextPage = page + 1;
+
+      if (filteredTeachers.length > nextPage * batchSize) {
+          setTeachers(filteredTeachers.slice(0, nextPage * batchSize));
+          setPage(nextPage);
       } else {
-        // No more teachers to load
-        setHasMore(false);
+          setHasMore(false);
       }
-    } catch (error) {
-      console.error('Error fetching teachers:', error);
-    } finally {
-      setIsLoading(false);
-    }
-};
-
-
+    };
+  
   return (
     <TeachersContainer>
       <Filter onFilterChange={handleFilterChange} />
@@ -177,6 +147,9 @@ const loadMoreFilteredTeachers = async () => {
         </LoadMore>
       )}
       {isLoading && <Loader />}
+      {filteredTeachers.length === 0 && teachers.length === 0 && (
+        <NoResults>Sorry, no teachers found matching the selected criteria</NoResults>
+      )}
     </TeachersContainer>
   );
 };

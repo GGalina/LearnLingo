@@ -1,27 +1,38 @@
-import React, {  useEffect,useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useColor } from '../../context/ColorContext';
 import { Label, CustomSelect, FilterContainer, FilterItemWrapper } from './Filter.styled';
 
 export const Filter = ({ onFilterChange }) => {
   const { selectedColor } = useColor();
-  const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('');
 
  const handleLanguageChange = (selectedOption) => {
     setSelectedLanguage(selectedOption);
-    onFilterChange({ language: selectedOption.value, level: selectedLevel, price: selectedPrice });
+    onFilterChange({
+      language: selectedOption.value,
+      level: selectedLevel.value,
+      price: selectedPrice.value
+    });
   };
 
   const handleLevelChange = (selectedOption) => {
     setSelectedLevel(selectedOption);
-    onFilterChange({ language: selectedLanguage, level: selectedOption.value, price: selectedPrice });
+    onFilterChange({
+      language: selectedLanguage.value,
+      level: selectedOption.value,
+      price: selectedPrice.value
+    });
   };
 
   const handlePriceChange = (selectedOption) => {
     setSelectedPrice(selectedOption);
-    onFilterChange({ language: selectedLanguage, level: selectedLevel, price: selectedOption.value });
-    console.log(selectedOption)
+    onFilterChange({
+      language: selectedLanguage.value,
+      level: selectedLevel.value,
+      price: selectedOption.value
+    });
   };
 
   const languageOptions = [
