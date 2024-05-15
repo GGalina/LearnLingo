@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# LearnLingo Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the LearnLingo project! This web application allows users to search for teachers, view their rates, languages that they teach, and other important information, and save their favorite teachers as well as book trial lessons. The project was developed using React, styled-components, Firebase database, and others.
 
-## Available Scripts
+LivePages: https://ggalina.github.io/LearnLingo/
 
-In the project directory, you can run:
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To run the project on your local machine, follow these steps:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Clone the Repository:
 
-### `npm test`
+```shell
+git clone https://github.com/GGalina/LearnLingo.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Navigate to the Project Directory:
 
-### `npm run build`
+```shell
+cd Coctails
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Install Dependencies: 
+Make sure you have Node.js and npm installed.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell 
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Start the Development Server: 
+To start the project, run the following command:
 
-### `npm run eject`
+```shell 
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+***Registration / Login:*** Users can create their account for the platform to add teachers to their "Favorites".
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+***Teachers:*** Page shows a list of teachers available for booking.
 
-## Learn More
+***Teacher Details:*** Clicking on a "Read more" button will display detailed information, including a summary of the teacher's experience and student reviews.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+***Teachers Filter:*** Users can filter teachers by selecting one or more filter options at the top of the page. Teachers can be filtered based on languages they teach, level of knowledge, and price.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+***Load More:*** Clicking the "Load more" button will load a new set of teachers (pagination).
 
-### Code Splitting
+***Book trial lesson:*** Users can book a trial lesson by clicking "Read more - Book trial lesson" and filling out the form.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+***Favorite Teachers:*** Users can mark a teacher as a favorite by clicking the heart icon in the corner of the teacher card. A second click on the heart will remove the teacher from the favorites list. The teacher added to favorites can be viewed in the "Favorites" tab.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Technologies Used
 
-### Making a Progressive Web App
+***REACT:*** Frontend library for building user interfaces.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+***React Context:*** For managing global state.
 
-### Advanced Configuration
+***React Hooks:*** For state management and side-effects in functional components.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+***AXIOS:*** For making HTTP requests.
 
-### Deployment
+***Libraries:***
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* react-responsive: For building responsive web application.
 
-### `npm run build` fails to minify
+* react-icons: For including icons.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* styled-components: For styling React components.
+
+* formik: For building forms.
+
+* react-toastify: For displaying toast notifications.
+
+* react-select: For building custom dropdowns.
+
+* react-router-dom: For declarative routing in application.
+
+* react-loading-icons: For displaying loading indicators.
+
+* yup: For form validation.
+
+* firebase: For backend services and hosting.
+
+* normalize.css: For consistent rendering across browsers.
+
+
+## Project Structure
+
+***src/:*** This directory contains the source code for the project.
+
+***src/assets/:*** Assets of the application including images and fonts.
+
+***src/components/:*** React components of the application.
+
+***src/context/:*** React Context for the application (includes auth, color, favorites, and modals contexts).
+***src/pages/:*** Pages of the application.
+***src/services/:*** Contains Firebase configuration file and API.
+
+
+## Material
+
+LivePages: https://ggalina.github.io/LearnLingo/
+
+Repository: https://github.com/GGalina/LearnLingo.git
+
+Figma design: https://www.figma.com/design/E1DcdF62O0enSSIH2S8dEj
+
+Technical requirements: https://docs.google.com/document/d/1ZB_MFgnnJj7t7OXtv5hESSwY6xRgVoACZKzgZczWc3Y 
