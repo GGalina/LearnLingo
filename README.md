@@ -18,7 +18,7 @@ git clone https://github.com/GGalina/LearnLingo.git
 ### Navigate to the Project Directory:
 
 ```shell
-cd Coctails
+cd LearnLingo
 ```
 
 ### Install Dependencies: 
