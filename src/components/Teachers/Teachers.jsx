@@ -147,7 +147,7 @@ export const Teachers = () => {
         </LoadMore>
       )}
       {isLoading && <Loader />}
-      {filteredTeachers.length === 0 && teachers.length === 0 && (
+      {filteredTeachers.length === 0 && teachers.length === 0 && !isLoading && (
         <NoResults>Sorry, no teachers found matching the selected criteria</NoResults>
       )}
     </TeachersContainer>
