@@ -13,7 +13,6 @@ jobs:
 
       - name: Install, lint, build 🔧
         run: |
-           run: |
             npm install
             npm run lint:js
             REACT_APP_FIREBASE_API_KEY=$FIREBASE_API_KEY \
